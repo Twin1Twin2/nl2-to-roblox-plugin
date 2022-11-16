@@ -6,6 +6,7 @@ local plasma = require(packages.plasma)
 local nl2 = script.Parent.Parent.nl2
 local importFromFile = require(nl2.importFromFile)
 local importFromSelection = require(nl2.importFromSelection)
+local pointsFromSelection = require(nl2.pointsFromSelection)
 
 local widgets = script.Parent.widgets
 local selectedText = require(widgets.selectedText)
@@ -57,6 +58,19 @@ return plasma.widget(function(closeMenuCallback)
 
 		setTrackName(importData.name)
 		setTrackPoints(importData.points)
+	end
+
+	if button("Load From Points"):clicked() then
+		local pointsDataResult = pointsFromSelection()
+		if pointsDataResult:isErr() then
+			warn(("Unable to load! %s"):format(pointsDataResult:unwrapErr()))
+			return
+		end
+
+		local pointsData = pointsDataResult:unwrap()
+
+		setTrackName(pointsData.name)
+		setTrackPoints(pointsData.points)
 	end
 
 	plasma.space()
