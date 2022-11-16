@@ -22,8 +22,10 @@ return function()
 			return pointsResult
 		end
 
+		local name = file.Name:match("(.+)%..+$") -- taken from stack overflow. thx
+
 		return Result.ok({
-			name = file.Name,
+			name = name,
 			points = pointsResult:unwrap(),
 		})
 	end)		
