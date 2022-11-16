@@ -78,7 +78,7 @@ local importMenu = plasma.widget(function(props)
 	end)
 
 	if distanceInputWidget:resetClicked() then
-		setScale(DEFAULT_DISTANCE)
+		setDistance(DEFAULT_DISTANCE)
 	end
 
 	plasma.space()
