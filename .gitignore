@@ -8,5 +8,6 @@
 /ServerPackages
 
 # misc
+/builds
 /notes
 *.DS_Store
