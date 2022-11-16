@@ -17,7 +17,7 @@ local pointsToModel = require(nl2.pointsToModel)
 
 local selectImportTrackMenu = require(script.Parent.selectImportTrackMenu)
 
-local DEFAULT_SCALE = 3.937
+local DEFAULT_SCALE = 4
 local DEFAULT_DISTANCE = 0.5
 
 local importMenu = plasma.widget(function(props)
