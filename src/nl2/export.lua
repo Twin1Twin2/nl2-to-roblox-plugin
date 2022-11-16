@@ -1,6 +1,10 @@
 
+local modules = script.Parent.Parent.modules
+local StringBuilder = require(modules.StringBuilder)
+
 local S = "\t"	-- csv separator
 local F = "%.6f" -- float value
+local CSV_HEADER = [["No."	"PosX"	"PosY"	"PosZ"	"FrontX"	"FrontY"	"FrontZ"	"LeftX"	"LeftY"	"LeftZ"	"UpX"	"UpY"	"UpZ"]]
 local LINE_FORMAT = "\n"	-- new line
 	.. "%d" .. S	-- index
 	.. F .. S		-- X
@@ -51,7 +55,6 @@ return function(points: table, scale: number)
 	local index = 1
 	local moduleIndex = 1
 	local hasFinished = false
-	local MAX_POINTS_PER_MODULE = 500
 
 	local exportFolder = Instance.new("Folder")
 
@@ -62,26 +65,31 @@ return function(points: table, scale: number)
 		exportFile.Name = moduleName
 		exportFile.Parent = exportFolder
 
-		local moduleData = ""
+		local stringBuilder = StringBuilder.new()
 
 		if moduleIndex == 1 then
-			moduleData = [["No."	"PosX"	"PosY"	"PosZ"	"FrontX"	"FrontY"	"FrontZ"	"LeftX"	"LeftY"	"LeftZ"	"UpX"	"UpY"	"UpZ"]]
+			stringBuilder:append(CSV_HEADER)
 		end
 
-		for _ = 1, MAX_POINTS_PER_MODULE, 1 do
+		local isFull = false
+
+		repeat
 			local cframe = points[index]
+			local newLine = cframeToNL2CSVLine(index, cframe)
 
-			moduleData = moduleData .. cframeToNL2CSVLine(index, cframe)
+			local success = stringBuilder:tryAppend(newLine)
+			isFull = not success
 
-			index = index + 1
+			if isFull == false then
+				index = index + 1
+			end
 
 			if index > numPoints then
 				hasFinished = true
-				break
 			end
-		end
+		until hasFinished or isFull
 
-		exportFile.Source = moduleData
+		exportFile.Source = stringBuilder:build()
 
 		moduleIndex = moduleIndex + 1
 	until hasFinished == true
