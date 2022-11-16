@@ -1,5 +1,5 @@
 {
-  "name": "nl2-to-roblox-plugin",
+  "name": "NL2ToRobloxPlugin",
   "globIgnorePaths": [
     "**/*story.lua"
   ],
