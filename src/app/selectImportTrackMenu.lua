@@ -10,7 +10,7 @@ local importFromSelection = require(nl2.importFromSelection)
 local widgets = script.Parent.widgets
 local selectedText = require(widgets.selectedText)
 local button = require(widgets.button)
-local buttonRow = require(widgets.buttonRow)
+local acceptCancelButtons = require(widgets.acceptCancelButtons)
 
 return plasma.widget(function(closeMenuCallback)
 	local trackName, setTrackName = plasma.useState(nil)
@@ -61,25 +61,16 @@ return plasma.widget(function(closeMenuCallback)
 
 	plasma.space()
 
-	buttonRow(function()
-		if button("Cancel"):clicked() then
-			if loadingFile == true then
-				return
-			end
-
-			closeMenuCallback(nil)
-		end
-
-		if button("Accept"):clicked() then
-			if loadingFile == true then
-				return
-			end
-
+	acceptCancelButtons(
+		function()
 			if trackPoints ~= nil then
 				closeMenuCallback(trackPoints, trackName)
 			end
+		end,
+		function()
+			closeMenuCallback(nil)
 		end
-	end)
+	)
 
 	plasma.space()
 
