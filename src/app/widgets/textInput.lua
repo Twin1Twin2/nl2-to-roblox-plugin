@@ -13,20 +13,19 @@ return plasma.widget(function(text: string)
 		local textBox = plasma.create("TextBox", {
 			[ref] = "textBox",
 
-			BackgroundColor3 = style.bg3,
+			BackgroundColor3 = style.bg2,
 			BorderSizePixel = 0,
 			Font = Enum.Font.SourceSans,
-			Size = UDim2.new(0, 100, 0, 40),
+			Size = UDim2.new(1, 0, 0, 40),
 			TextColor3 = style.textColor,
+			TextXAlignment = Enum.TextXAlignment.Left,
 			AutomaticSize = Enum.AutomaticSize.X,
 			TextSize = 21,
 
 			plasma.create("UIPadding", {
-				PaddingLeft = UDim.new(0, 10),
-				PaddingRight = UDim.new(0, 10),
+				PaddingLeft = UDim.new(0, 20),
+				PaddingRight = UDim.new(0, 20),
 			}),
-
-			plasma.create("UICorner"),
 
 			Focused = function()
 				setFocused(true)

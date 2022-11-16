@@ -7,7 +7,10 @@ local packages = root.packages
 local plasma = require(packages.plasma)
 
 local widgets = script.Parent.widgets
-local textInput = require(widgets.textInput)
+local defaultableTextInput = require(widgets.defaultableTextInput)
+local selectedText = require(widgets.selectedText)
+local button = require(widgets.button)
+local buttonRow = require(widgets.buttonRow)
 
 local nl2 = script.Parent.Parent.nl2
 local pointsToModel = require(nl2.pointsToModel)
@@ -21,12 +24,14 @@ local importMenu = plasma.widget(function(props)
 	local openSelectTrackMenu = props.openSelectTrackMenu
 
 	plasma.label("Current Track:")
-
 	local selectedTrackName = props.selectedTrackName or "[NONE]"
+	selectedText(selectedTrackName)
 
-	if plasma.button(selectedTrackName):clicked() then
-		openSelectTrackMenu()
-	end
+	buttonRow(function()
+		if button("Set Track"):clicked() then
+			openSelectTrackMenu()
+		end
+	end)
 
 	plasma.space()
 
@@ -35,7 +40,9 @@ local importMenu = plasma.widget(function(props)
 	local scale, setScale = plasma.useState(DEFAULT_SCALE)
 
 	plasma.label("Scale:")
-	textInput(tostring(scale)):enterPressed(function(input: string)
+	local scaleInputWidget = defaultableTextInput(tostring(scale))
+
+	scaleInputWidget:enterPressed(function(input: string)
 		local newScale = tonumber(input)
 		if newScale == nil then
 			return
@@ -48,11 +55,17 @@ local importMenu = plasma.widget(function(props)
 		setScale(newScale)
 	end)
 
+	if scaleInputWidget:resetClicked() then
+		setScale(DEFAULT_SCALE)
+	end
+
 	-- nl2 export distance between points
 	local distance, setDistance = plasma.useState(DEFAULT_DISTANCE)
 
 	plasma.label("Distance:")
-	textInput(tostring(distance)):enterPressed(function(input: string)
+	local distanceInputWidget = defaultableTextInput(tostring(distance))
+
+	distanceInputWidget:enterPressed(function(input: string)
 		local newDistance = tonumber(input)
 		if newDistance == nil then
 			return
@@ -65,19 +78,27 @@ local importMenu = plasma.widget(function(props)
 		setDistance(newDistance)
 	end)
 
+	if distanceInputWidget:resetClicked() then
+		setScale(DEFAULT_DISTANCE)
+	end
+
 	plasma.space()
 
 	-- import track button
-	if plasma.button("Import"):clicked() then
-		if props.selectedTrackPoints ~= nil then
-			local model = pointsToModel(props.selectedTrackPoints, scale, distance)
-			model.Name = props.selectedTrackName .. "_Import"
-			model.Parent = workspace
+	buttonRow(function()
+		if button("Import"):clicked() then
+			if props.selectedTrackPoints ~= nil then
+				local model = pointsToModel(props.selectedTrackPoints, scale, distance)
+				model.Name = props.selectedTrackName .. "_Import"
+				model.Parent = workspace
 
-			Selection:Set({model})
-			ChangeHistoryService:SetWaypoint("ImportTrack")
+				Selection:Set({model})
+				ChangeHistoryService:SetWaypoint("ImportTrack")
+			end
 		end
-	end
+	end)
+
+	plasma.space(10)
 
 	return {
 

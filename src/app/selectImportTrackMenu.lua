@@ -8,6 +8,9 @@ local importFromFile = require(nl2.importFromFile)
 local importFromSelection = require(nl2.importFromSelection)
 
 local widgets = script.Parent.widgets
+local selectedText = require(widgets.selectedText)
+local button = require(widgets.button)
+local buttonRow = require(widgets.buttonRow)
 
 return plasma.widget(function(closeMenuCallback)
 	local trackName, setTrackName = plasma.useState(nil)
@@ -15,14 +18,16 @@ return plasma.widget(function(closeMenuCallback)
 
 	local loadingFile, setLoadingFile = plasma.useState(false)
 
-	local selectedText = "[NONE]"
+	plasma.label("Select Track To Import:")
+
+	local selectedTrackText = "[NONE]"
 	if trackName ~= nil then
-		selectedText = trackName
+		selectedTrackText = trackName
 	end
 
-	plasma.button(selectedText)
+	selectedText(selectedTrackText)
 
-	if plasma.button("Load From File"):clicked() then
+	if button("Load From File"):clicked() then
 		setLoadingFile(true)
 		importFromFile()
 			:andThen(function(importDataResult)
@@ -41,7 +46,7 @@ return plasma.widget(function(closeMenuCallback)
 			end)
 	end
 
-	if plasma.button("Load From Script"):clicked() then
+	if button("Load From Script"):clicked() then
 		local importDataResult = importFromSelection()
 		if importDataResult:isErr() then
 			warn(("Unable to load! %s"):format(importDataResult:unwrapErr()))
@@ -56,8 +61,8 @@ return plasma.widget(function(closeMenuCallback)
 
 	plasma.space()
 
-	plasma.row(function()
-		if plasma.button("Cancel"):clicked() then
+	buttonRow(function()
+		if button("Cancel"):clicked() then
 			if loadingFile == true then
 				return
 			end
@@ -65,7 +70,7 @@ return plasma.widget(function(closeMenuCallback)
 			closeMenuCallback(nil)
 		end
 
-		if plasma.button("Accept"):clicked() then
+		if button("Accept"):clicked() then
 			if loadingFile == true then
 				return
 			end
@@ -75,6 +80,8 @@ return plasma.widget(function(closeMenuCallback)
 			end
 		end
 	end)
+
+	plasma.space()
 
 	return {
 	}

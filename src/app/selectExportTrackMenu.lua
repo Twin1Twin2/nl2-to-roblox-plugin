@@ -7,19 +7,24 @@ local nl2 = root.nl2
 local pointsFromSelection = require(nl2.pointsFromSelection)
 
 local widgets = script.Parent.widgets
+local selectedText = require(widgets.selectedText)
+local button = require(widgets.button)
+local buttonRow = require(widgets.buttonRow)
 
 return plasma.widget(function(closeMenuCallback)
 	local trackName, setTrackName = plasma.useState(nil)
 	local trackPoints, setTrackPoints = plasma.useState(nil)
 
-	local selectedText = "[NONE]"
+	plasma.label("Select Track To Export:")
+
+	local selectedTrackText = "[NONE]"
 	if trackName ~= nil then
-		selectedText = trackName
+		selectedTrackText = trackName
 	end
 
-	plasma.button(selectedText)
+	selectedText(selectedTrackText)
 
-	if plasma.button("Load From Points"):clicked() then
+	if button("Load From Points"):clicked() then
 		local pointsDataResult = pointsFromSelection()
 		if pointsDataResult:isErr() then
 			warn(("Unable to load! %s"):format(pointsDataResult:unwrapErr()))
@@ -34,17 +39,19 @@ return plasma.widget(function(closeMenuCallback)
 
 	plasma.space()
 
-	plasma.row(function()
-		if plasma.button("Cancel"):clicked() then
+	buttonRow(function()
+		if button("Cancel"):clicked() then
 			closeMenuCallback(nil)
 		end
 
-		if plasma.button("Accept"):clicked() then
+		if button("Accept"):clicked() then
 			if trackPoints ~= nil then
 				closeMenuCallback(trackPoints, trackName)
 			end
 		end
 	end)
+
+	plasma.space()
 
 	return {
 	}

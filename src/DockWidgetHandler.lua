@@ -7,6 +7,10 @@ local plasma = require(packages.plasma)
 local modules = script.Parent.modules
 local Maid = require(modules.Maid)
 
+local app = script.Parent.app
+local widgets = app.widgets
+local scrollingFrame = require(widgets.scrollingFrame)
+
 --- @class DockWidgetHandler
 --- *Description here*
 
@@ -74,7 +78,7 @@ function DockWidgetHandler:enable()
 
 	local heartbeatConnection = RunService.Heartbeat:Connect(function(_deltaTime: number)
 		plasma.start(self.node, function()
-			plasma.window(self.title, function()
+			scrollingFrame(function()
 				self.widget()
 			end)
 		end)

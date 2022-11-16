@@ -5,6 +5,9 @@ local root = script.Parent.Parent
 local packages = root.packages
 local plasma = require(packages.plasma)
 
+local widgets = script.Parent.widgets
+local scrollingFrame = require(widgets.scrollingFrame)
+
 local selectImportTrackMenu = require(script.Parent.selectImportTrackMenu)
 
 return function(frame: Frame): () -> ()
@@ -12,7 +15,7 @@ return function(frame: Frame): () -> ()
 
 	local heartbeatConnection = RunService.Heartbeat:Connect(function(deltaTime: number)
 		plasma.start(rootNode, function()
-			plasma.window("Select Track", function()
+			scrollingFrame(function()
 				selectImportTrackMenu(function(points, name)
 					if name then
 						print("Closing menu with track: " .. name .. "; NumPoints = " .. tostring(#points))

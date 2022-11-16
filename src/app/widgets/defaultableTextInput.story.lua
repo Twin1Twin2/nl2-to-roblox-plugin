@@ -6,8 +6,7 @@ local packages = root.packages
 local plasma = require(packages.plasma)
 
 local container = require(script.Parent.container)
-
-local textInput = require(script.Parent.textInput)
+local defaultableTextInput = require(script.Parent.defaultableTextInput)
 
 return function(frame: Frame): () -> ()
 	local rootNode = plasma.new(frame)
@@ -17,10 +16,15 @@ return function(frame: Frame): () -> ()
 			local currentInput, setCurrentInput = plasma.useState("Enter Text Here")
 
 			container(function()
-				textInput(currentInput):enterPressed(function(input: string)
-					print("Input =", input)
+				local widget = defaultableTextInput(currentInput)
+
+				widget:enterPressed(function(input: string)
 					setCurrentInput(input)
 				end)
+
+				if widget:resetClicked() then
+					setCurrentInput("Enter Text Here")
+				end
 			end)
 		end)
 	end)

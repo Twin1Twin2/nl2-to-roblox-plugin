@@ -7,12 +7,15 @@ local plasma = require(packages.plasma)
 
 local importMenu = require(script.Parent.importMenu)
 
+local widgets = script.Parent.widgets
+local scrollingFrame = require(widgets.scrollingFrame)
+
 return function(frame: Frame): () -> ()
 	local rootNode = plasma.new(frame)
 
 	local heartbeatConnection = RunService.Heartbeat:Connect(function(deltaTime: number)
 		plasma.start(rootNode, function()
-			plasma.window("Import Menu", function()
+			scrollingFrame(function()
 				importMenu()
 			end)
 		end)
