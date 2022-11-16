@@ -113,6 +113,10 @@ function DockWidgetHandler:_createGui()
 	gui.Title = self.title
 	gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 
+	gui:BindToClose(function()
+		self:disable()
+	end)
+
 	self.node = plasma.new(gui)
 	self.gui = gui
 	self.maid:GiveTask(gui)
