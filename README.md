@@ -9,3 +9,11 @@ rojo build -o "nl2ToRobloxPlugin.rbxmx"
 ```
 
 For more help, check out [the Rojo documentation](https://rojo.space/docs).
+
+## How to Use:
+
+**ATTENTION: No Limits 2 Professional Edition is required to export as a CSV!**
+
+To Import a coaster from NL2, first open up the Import menu. Set the track you want to import by clicking the Set Track button. From here, you can import from your file system using Load From File. Next, set the scale and distances options. Finally, click the Import button to load it into your game.
+
+To Export to NL2, first open up the Export menu. Set the track you want to import by clicking the Set Track button. Load the points you want to use into the system by selecting it and then clicking Load from Points. The points *must* be numbered in order along your track line with no duplicate numbers. Click accept and set the scale. Then, click the Export button, which should load a folder of ModuleScripts into the workspace. You'll need to copy-paste the contents of each script *in-order* into a text file through a text editor program. Finally, save the file as a ".csv" and load it in NL2.
