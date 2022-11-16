@@ -103,7 +103,15 @@ function DockWidgetHandler:disable()
 end
 
 function DockWidgetHandler:_createGui()
-	local dockWidgetInfo = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Float, false, false, 0, 0)
+	local dockWidgetInfo = DockWidgetPluginGuiInfo.new(
+		Enum.InitialDockState.Float,
+		false,
+		false,
+		200,
+		300,
+		150,
+		150
+	)
 	local gui = self.plugin:CreateDockWidgetPluginGui(
 		self.title,
 		dockWidgetInfo
