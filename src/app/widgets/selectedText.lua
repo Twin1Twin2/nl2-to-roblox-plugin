@@ -23,6 +23,8 @@ return plasma.widget(function(text: string)
 				PaddingLeft = UDim.new(0, 10),
 				PaddingRight = UDim.new(0, 10),
 			}),
+
+			plasma.create("UICorner"),
 		})
 
 		return textBox

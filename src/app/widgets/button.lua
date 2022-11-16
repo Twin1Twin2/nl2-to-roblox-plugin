@@ -35,6 +35,8 @@ return plasma.widget(function(options: table | string)
 				PaddingRight = UDim.new(0, 10),
 			}),
 
+			plasma.create("UICorner"),
+
 			Activated = function()
 				setClicked(true)
 			end,

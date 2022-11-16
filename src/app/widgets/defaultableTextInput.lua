@@ -35,6 +35,8 @@ return plasma.widget(function(text: string)
 					PaddingRight = UDim.new(0, 20),
 				}),
 
+				plasma.create("UICorner"),
+
 				Focused = function()
 					setFocused(true)
 				end,
@@ -54,6 +56,8 @@ return plasma.widget(function(text: string)
 				AutomaticSize = Enum.AutomaticSize.X,
 
 				Image = "rbxassetid://7746261027",
+
+				plasma.create("UICorner"),
 
 				Activated = function()
 					setClicked(true)
