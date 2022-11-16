@@ -1,0 +1,16 @@
+{
+  "name": "nl2-to-roblox-plugin",
+  "tree": {
+    "$className": "DataModel",
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "NL2ToRobloxPlugin": {
+        "$className": "Folder",
+        "$path": "src",
+        "packages": {
+          "$path": "Packages"
+        }
+      }
+    }
+  }
+}

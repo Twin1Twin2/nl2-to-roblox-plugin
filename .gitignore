@@ -1,0 +1,12 @@
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock
+
+# wally folders
+/DevPackages
+/Packages
+/ServerPackages
+
+# misc
+/notes
+*.DS_Store

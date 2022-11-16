@@ -1,0 +1,10 @@
+{
+  "name": "nl2-to-roblox-plugin",
+  "tree": {
+    "$className": "Folder",
+    "$path": "src",
+    "packages": {
+      "$path": "Packages"
+    }
+  }
+}
