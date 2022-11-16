@@ -75,20 +75,17 @@ return plasma.widget(function(text: string)
 	end
 
 	local handle = {
-		enterPressed = function(_self, callback: ((input: string) -> ()) | nil)
-			if enterPressed then
-				local input = textBox.Text
+		focusLost = function(_self, callback: ((input: string, enterPressed: boolean) -> ()) | nil)
+			local input = textBox.Text
+			local currentEnterPressed = enterPressed
 
-				setEnterPressed(false)
+			setEnterPressed(false)
 
-				if callback then
-					callback(input)
-				end
-
-				return true
+			if callback then
+				callback(input, currentEnterPressed)
 			end
 
-			return false
+			return true
 		end,
 		resetClicked = function(_self)
 			if clicked then

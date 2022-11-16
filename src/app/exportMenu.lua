@@ -42,7 +42,7 @@ local importMenu = plasma.widget(function(props)
 	plasma.label("Scale:")
 	local scaleInputWidget = defaultableTextInput(tostring(scale))
 
-	scaleInputWidget:enterPressed(function(input: string)
+	scaleInputWidget:focusLost(function(input: string)
 		local newScale = tonumber(input)
 		if newScale == nil then
 			return
