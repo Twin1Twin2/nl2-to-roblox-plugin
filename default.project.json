@@ -1,5 +1,8 @@
 {
   "name": "nl2-to-roblox-plugin",
+  "globIgnorePaths": [
+    "**/*story.lua"
+  ],
   "tree": {
     "$className": "Folder",
     "$path": "src",
