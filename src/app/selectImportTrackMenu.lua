@@ -33,7 +33,7 @@ return plasma.widget(function(closeMenuCallback)
 		importFromFile()
 			:andThen(function(importDataResult)
 				if importDataResult:isErr() then
-					warn(("Unable to load! %s"):format(importDataResult:unwrapErr()))
+					warn(("Unable to load from file! %s"):format(importDataResult:unwrapErr()))
 					return
 				end
 		
@@ -50,7 +50,7 @@ return plasma.widget(function(closeMenuCallback)
 	if button("Load From Script"):clicked() then
 		local importDataResult = importFromSelection()
 		if importDataResult:isErr() then
-			warn(("Unable to load! %s"):format(importDataResult:unwrapErr()))
+			warn(("Unable to load from script! %s"):format(importDataResult:unwrapErr()))
 			return
 		end
 
@@ -63,7 +63,7 @@ return plasma.widget(function(closeMenuCallback)
 	if button("Load From Points"):clicked() then
 		local pointsDataResult = pointsFromSelection()
 		if pointsDataResult:isErr() then
-			warn(("Unable to load! %s"):format(pointsDataResult:unwrapErr()))
+			warn(("Unable to load from points! %s"):format(pointsDataResult:unwrapErr()))
 			return
 		end
 

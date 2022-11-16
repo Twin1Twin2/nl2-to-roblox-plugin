@@ -27,7 +27,7 @@ return plasma.widget(function(closeMenuCallback)
 	if button("Load From Points"):clicked() then
 		local pointsDataResult = pointsFromSelection()
 		if pointsDataResult:isErr() then
-			warn(("Unable to load! %s"):format(pointsDataResult:unwrapErr()))
+			warn(("Unable to load from points! %s"):format(pointsDataResult:unwrapErr()))
 			return
 		end
 
