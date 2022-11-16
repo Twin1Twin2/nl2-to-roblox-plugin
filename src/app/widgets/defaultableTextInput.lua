@@ -29,6 +29,7 @@ return plasma.widget(function(text: string)
 				TextXAlignment = Enum.TextXAlignment.Left,
 				AutomaticSize = Enum.AutomaticSize.X,
 				TextSize = 21,
+				ClearTextOnFocus = false,
 
 				plasma.create("UIPadding", {
 					PaddingLeft = UDim.new(0, 20),
