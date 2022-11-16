@@ -1,7 +1,4 @@
 
-local Selection = game:GetService("Selection")
-local ChangeHistoryService = game:GetService("ChangeHistoryService")
-
 local root = script.Parent.Parent
 local packages = root.packages
 local plasma = require(packages.plasma)
@@ -12,8 +9,8 @@ local selectedText = require(widgets.selectedText)
 local button = require(widgets.button)
 local buttonRow = require(widgets.buttonRow)
 
-local nl2 = script.Parent.Parent.nl2
-local export = require(nl2.export)
+local pluginActions = script.Parent.Parent.pluginActions
+local exportFromPoints = require(pluginActions.exportFromPoints)
 
 local selectExportTrackMenu = require(script.Parent.selectExportTrackMenu)
 
@@ -65,12 +62,11 @@ local importMenu = plasma.widget(function(props)
 	buttonRow(function()
 		if button("Export"):clicked() then
 			if props.selectedTrackPoints ~= nil then
-				local exportInstance = export(props.selectedTrackPoints, scale)
-				exportInstance.Name = props.selectedTrackName .. "_Export"
-				exportInstance.Parent = workspace
-
-				Selection:Set({exportInstance})
-				ChangeHistoryService:SetWaypoint("ExportTrack")
+				exportFromPoints(
+					props.selectedTrackPoints,
+					scale,
+					props.selectedTrackName
+				)
 			end
 		end
 	end)
