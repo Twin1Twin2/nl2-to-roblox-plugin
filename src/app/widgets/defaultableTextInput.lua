@@ -5,6 +5,8 @@ local plasma = require(packages.plasma)
 
 return plasma.widget(function(text: string)
 	local focused, setFocused = plasma.useState(false)
+	local focusLost, setFocusLost = plasma.useState(false)
+
 	local enterPressed, setEnterPressed = plasma.useState(false)
 
 	local clicked, setClicked = plasma.useState(false)
@@ -44,6 +46,7 @@ return plasma.widget(function(text: string)
 				FocusLost = function(wasEnterPressed: boolean)
 					setEnterPressed(wasEnterPressed)
 					setFocused(false)
+					setFocusLost(true)
 				end,
 			}),
 
@@ -76,9 +79,14 @@ return plasma.widget(function(text: string)
 
 	local handle = {
 		focusLost = function(_self, callback: ((input: string, enterPressed: boolean) -> ()) | nil)
+			if focusLost == false then
+				return
+			end
+
 			local input = textBox.Text
 			local currentEnterPressed = enterPressed
 
+			setFocusLost(false)
 			setEnterPressed(false)
 
 			if callback then
