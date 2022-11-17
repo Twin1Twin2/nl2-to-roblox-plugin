@@ -18,7 +18,7 @@ return function(frame: Frame): () -> ()
 			container(function()
 				local widget = defaultableTextInput(currentInput)
 
-				widget:enterPressed(function(input: string)
+				widget:focusLost(function(input: string)
 					setCurrentInput(input)
 				end)
 

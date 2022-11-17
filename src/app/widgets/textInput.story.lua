@@ -17,7 +17,7 @@ return function(frame: Frame): () -> ()
 			local currentInput, setCurrentInput = plasma.useState("Enter Text Here")
 
 			container(function()
-				textInput(currentInput):enterPressed(function(input: string)
+				textInput(currentInput):focusLost(function(input: string)
 					print("Input =", input)
 					setCurrentInput(input)
 				end)
