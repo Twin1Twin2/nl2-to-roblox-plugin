@@ -25,14 +25,14 @@ return plasma.widget(function(options: table | string)
 			BorderSizePixel = options.borderSize or 0,
 			BorderColor3 = options.borderColor or style.textColor,
 			Font = Enum.Font.SourceSans,
-			Size = UDim2.new(0, 100, 0, 40),
+			Size = UDim2.new(0, 100, 0, options.height or 40),
 			TextColor3 = options.textColor or style.textColor,
 			AutomaticSize = Enum.AutomaticSize.X,
 			TextSize = 21,
 
 			plasma.create("UIPadding", {
-				PaddingLeft = UDim.new(0, 10),
-				PaddingRight = UDim.new(0, 10),
+				PaddingLeft = UDim.new(0, options.paddingLeft or 10),
+				PaddingRight = UDim.new(0, options.paddingRight or 10),
 			}),
 
 			plasma.create("UICorner"),
