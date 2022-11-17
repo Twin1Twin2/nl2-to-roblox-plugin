@@ -84,8 +84,19 @@ local importMenu = plasma.widget(function(props)
 	plasma.space()
 
 	-- import track button
-	buttonRow(function()
-		if button("Import"):clicked() then
+	buttonRow({
+		height = 48,
+		alignment = Enum.HorizontalAlignment.Center
+	}, function()
+		local buttonWidget = button({
+			text = "IMPORT",
+			height = 48,
+			bgColor = Color3.fromRGB(0, 170, 255),
+			paddingLeft = 40,
+			paddingRight = 40,
+		})
+
+		if buttonWidget:clicked() then
 			if props.selectedTrackPoints ~= nil then
 				importToPoints(
 					props.selectedTrackPoints,
