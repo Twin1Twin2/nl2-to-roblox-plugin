@@ -96,6 +96,7 @@ function DockWidgetHandler:disable()
 	end
 
 	self.maid.updateConnection = nil
+	plasma.start(self.node, function() end)
 
 	self.gui.Enabled = false
 	self.button:SetActive(false)
