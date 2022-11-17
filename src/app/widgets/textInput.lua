@@ -5,6 +5,8 @@ local plasma = require(packages.plasma)
 
 return plasma.widget(function(text: string)
 	local focused, setFocused = plasma.useState(false)
+	local focusLost, setFocusLost = plasma.useState(false)
+
 	local enterPressed, setEnterPressed = plasma.useState(false)
 
 	local refs = plasma.useInstance(function(ref)
@@ -21,11 +23,14 @@ return plasma.widget(function(text: string)
 			TextXAlignment = Enum.TextXAlignment.Left,
 			AutomaticSize = Enum.AutomaticSize.X,
 			TextSize = 21,
+			ClearTextOnFocus = false,
 
 			plasma.create("UIPadding", {
 				PaddingLeft = UDim.new(0, 20),
 				PaddingRight = UDim.new(0, 20),
 			}),
+
+			plasma.create("UICorner"),
 
 			Focused = function()
 				setFocused(true)
@@ -33,6 +38,7 @@ return plasma.widget(function(text: string)
 			FocusLost = function(wasEnterPressed: boolean)
 				setEnterPressed(wasEnterPressed)
 				setFocused(false)
+				setFocusLost(true)
 			end,
 		})
 
@@ -45,21 +51,23 @@ return plasma.widget(function(text: string)
 	end
 
 	local handle = {
-		enterPressed = function(_self, callback: ((input: string) -> ()) | nil)
-			if enterPressed then
-				local input = textBox.Text
-
-				setEnterPressed(false)
-
-				if callback then
-					callback(input)
-				end
-
-				return true
+		focusLost = function(_self, callback: ((input: string, enterPressed: boolean) -> ()) | nil)
+			if focusLost == false then
+				return
 			end
 
-			return false
-		end
+			local input = textBox.Text
+			local currentEnterPressed = enterPressed
+
+			setFocusLost(false)
+			setEnterPressed(false)
+
+			if callback then
+				callback(input, currentEnterPressed)
+			end
+
+			return true
+		end,
 	}
 
 	return handle
