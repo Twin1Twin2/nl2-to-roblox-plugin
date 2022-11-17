@@ -22,7 +22,9 @@ return function(frame: Frame): () -> ()
 	end)
 
 	return function()
-		rootNode = nil -- remove node state
 		heartbeatConnection:Disconnect()
+
+		plasma.start(rootNode, function() end)
+		rootNode = nil -- remove node state
 	end
 end
