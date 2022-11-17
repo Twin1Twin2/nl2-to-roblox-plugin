@@ -19,102 +19,6 @@ local selectImportTrackMenu = require(script.Parent.selectImportTrackMenu)
 local DEFAULT_SCALE = 4
 local DEFAULT_DISTANCE = 0.5
 
-local importMenu = plasma.widget(function(props)
-	local openSelectTrackMenu = props.openSelectTrackMenu
-
-	plasma.label("Current Track:")
-	local selectedTrackName = props.selectedTrackName or "[NONE]"
-	selectedText(selectedTrackName)
-
-	buttonRow(function()
-		if button("Set Track"):clicked() then
-			openSelectTrackMenu()
-		end
-	end)
-
-	plasma.space()
-
-	-- import settings:
-	-- scale
-	local scale, setScale = plasma.useState(DEFAULT_SCALE)
-
-	plasma.label("Scale:")
-	local scaleInputWidget = defaultableTextInput(tostring(scale))
-
-	scaleInputWidget:focusLost(function(input: string)
-		local newScale = tonumber(input)
-		if newScale == nil then
-			return
-		end
-
-		if newScale <= 0 then
-			return
-		end
-
-		setScale(newScale)
-	end)
-
-	if scaleInputWidget:resetClicked() then
-		setScale(DEFAULT_SCALE)
-	end
-
-	-- nl2 export distance between points
-	local distance, setDistance = plasma.useState(DEFAULT_DISTANCE)
-
-	plasma.label("Distance:")
-	local distanceInputWidget = defaultableTextInput(tostring(distance))
-
-	distanceInputWidget:focusLost(function(input: string)
-		local newDistance = tonumber(input)
-		if newDistance == nil then
-			return
-		end
-
-		if newDistance <= 0 then
-			return
-		end
-
-		setDistance(newDistance)
-	end)
-
-	if distanceInputWidget:resetClicked() then
-		setDistance(DEFAULT_DISTANCE)
-	end
-
-	plasma.space()
-
-	-- import track button
-	buttonRow({
-		height = 48,
-		alignment = Enum.HorizontalAlignment.Center
-	}, function()
-		local buttonWidget = button({
-			text = "IMPORT",
-			height = 48,
-			bgColor = Color3.fromRGB(0, 170, 255),
-			paddingLeft = 40,
-			paddingRight = 40,
-		})
-
-		if buttonWidget:clicked() then
-			if props.selectedTrackPoints ~= nil then
-				importToPoints(
-					props.selectedTrackPoints,
-					scale,
-					distance,
-					props.selectedTrackName
-				)
-			end
-		end
-	end)
-
-	plasma.space(10)
-
-	return {
-
-	}
-end)
-
 return plasma.widget(function()
 	-- selected track
 	local selectedTrackPoints, setSelectedTrackPoints = plasma.useState(nil)
@@ -132,12 +36,92 @@ return plasma.widget(function()
 			setIsSelectingTrack(false)
 		end)
 	else
-		importMenu({
-			selectedTrackPoints = selectedTrackPoints,
-			selectedTrackName = selectedTrackName,
-			openSelectTrackMenu = function()
+		plasma.label("Current Track:")
+		local selectedTrackNameText = if selectedTrackName then selectedTrackName else "[NONE]"
+		selectedText(selectedTrackNameText)
+
+		buttonRow(function()
+			if button("Set Track"):clicked() then
 				setIsSelectingTrack(true)
 			end
-		})
+		end)
+
+		plasma.space()
+
+		-- import settings:
+		-- scale
+		local scale, setScale = plasma.useState(DEFAULT_SCALE)
+
+		plasma.label("Scale:")
+		local scaleInputWidget = defaultableTextInput(tostring(scale))
+
+		scaleInputWidget:focusLost(function(input: string)
+			local newScale = tonumber(input)
+			if newScale == nil then
+				return
+			end
+
+			if newScale <= 0 then
+				return
+			end
+
+			setScale(newScale)
+		end)
+
+		if scaleInputWidget:resetClicked() then
+			setScale(DEFAULT_SCALE)
+		end
+
+		-- nl2 export distance between points
+		local distance, setDistance = plasma.useState(DEFAULT_DISTANCE)
+
+		plasma.label("Distance:")
+		local distanceInputWidget = defaultableTextInput(tostring(distance))
+
+		distanceInputWidget:focusLost(function(input: string)
+			local newDistance = tonumber(input)
+			if newDistance == nil then
+				return
+			end
+
+			if newDistance <= 0 then
+				return
+			end
+
+			setDistance(newDistance)
+		end)
+
+		if distanceInputWidget:resetClicked() then
+			setDistance(DEFAULT_DISTANCE)
+		end
+
+		plasma.space()
+
+		-- import track button
+		buttonRow({
+			height = 48,
+			alignment = Enum.HorizontalAlignment.Center
+		}, function()
+			local buttonWidget = button({
+				text = "IMPORT",
+				height = 48,
+				bgColor = Color3.fromRGB(0, 170, 255),
+				paddingLeft = 40,
+				paddingRight = 40,
+			})
+
+			if buttonWidget:clicked() then
+				if selectedTrackPoints ~= nil then
+					importToPoints(
+						selectedTrackPoints,
+						scale,
+						distance,
+						selectedTrackName
+					)
+				end
+			end
+		end)
+
+		plasma.space(10)
 	end
 end)
