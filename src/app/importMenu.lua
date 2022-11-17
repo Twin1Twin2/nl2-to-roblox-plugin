@@ -41,6 +41,15 @@ return plasma.widget(function()
 		selectedText(selectedTrackNameText)
 
 		buttonRow(function()
+			local clearTrackButton = button({
+				text = "Clear Track",
+				bgColor = Color3.fromRGB(183, 28, 28),
+			})
+			if clearTrackButton:clicked() then
+				setSelectedTrackPoints(nil)
+				setSelectedTrackName(nil)
+			end
+
 			if button("Set Track"):clicked() then
 				setIsSelectingTrack(true)
 			end
