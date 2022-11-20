@@ -8,11 +8,11 @@ version = "0.4.2"
 dependencies = [["TestEZ", "roblox/testez@0.4.1"]]
 
 [[package]]
-name = "gabrielconcepcion/test-plasma-plugin"
-version = "0.1.0"
-dependencies = [["plasma", "evaera/plasma@0.4.2"]]
-
-[[package]]
 name = "roblox/testez"
 version = "0.4.1"
 dependencies = []
+
+[[package]]
+name = "theepictwin/nl2-to-roblox-plugin"
+version = "2.1.0"
+dependencies = [["plasma", "evaera/plasma@0.4.2"]]
